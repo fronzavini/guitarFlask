@@ -1,0 +1,10 @@
+#criar ambiente virtual
+py -3 -m venv .venv
+ativar ambiente
+C
+dependencias do projeto
+Flask
+mysql-connector-python
+werkzeug
+
+pip install Flask mysql-connector-python werkzeug
