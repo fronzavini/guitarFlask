@@ -29,4 +29,9 @@ def cadastro():
         conn = mysql.connector.connect(**db_config)
         cursor = conn.cursor()
 
-        cursor.execute("SELECT * FROM usuario WHERE username usuario = %S OR email usuario")
+        cursor.execute("SELECT * FROM usuario WHERE username_usuario = %s OR email_usuario = %s", (username, email))
+        if cursor.fetchone():
+            flash("Nome de usuário ou email já cadastrado.", "erro")
+            return redirect(url_for('cadastro'))
+        
+        cursor.execute("""INSERT INTO usuario (nome_usuario, username_usuario, password_usuario, email_usuario ) = VALUES ("%s,%s,%s,%s,%s)""", (nome,username,senha,email,True))
