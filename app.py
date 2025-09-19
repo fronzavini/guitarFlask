@@ -63,7 +63,7 @@ def login():
                 flash("Conta desativada. Entre em contato com o suporte.", "erro")
                 return redirect(url_for('login'))
             session['usuario_id'] = usuario['cod_usuario']
-            session['username'] = usuario['nome_usuario']
+            session['usuario_nome'] = usuario['nome_usuario']
             flash("Login realizado com sucesso!", "sucesso")
             return redirect(url_for('dashboard'))
         else:
@@ -72,11 +72,33 @@ def login():
 
     return render_template('login.html')
 
-
 @app.route('/dashboard')
 def dashboard():
-    if 'usuario_id' not in session:
-        flash("Por favor, faça login para acessar o dashboard.", "erro")
-        return redirect(url_for('login'))
+    if 'usuario_id' not  in session:
+        flash("Por favor, faça login para acessar o dashboard", "erro")
+        return redirect(url_for("login"))
     
-    return render_template('dashboard.html', username=session['username'])
+    return render_template('dashboard.html')
+
+@app.route('logout')
+def logout():
+    session.pop('usuario_id', None)
+    session.pop('usuario_none', None)
+    flash ('Você saiu da sua conta', 'sucesso')
+    return redirect(url_for('login'))
+
+@app.route('/')
+def index():
+    return redirect(url_for('login'))
+
+@app.route('/verificar_usuario_email', methods=['POST'])
+def verificar_usuario_email():
+    username = request.form['username']
+    email = request.form['email']
+    conn = mysql.connector.connect(**db_config)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM usuario WHERE username_usuario = %s OR email_usuario = %s", (username, email))
+    existe = cursor.fetchone()
+    cursor.close()
+    conn.close()
+    return 'existe' if existe else 'disponivel'
