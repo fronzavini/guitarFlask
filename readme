@@ -1,10 +1,34 @@
-#criar ambiente virtual
-py -3 -m venv .venv
-ativar ambiente
-C
-dependencias do projeto
-Flask
-mysql-connector-python
-werkzeug
+pip install Flask Flask-SQLAlchemy mutagen librosa
 
-pip install Flask mysql-connector-python werkzeug
+
+
+Python Hero - Jogo de Ritmo com Flask
+Este é um jogo de ritmo no estilo Guitar Hero, desenvolvido com Python (usando o framework Flask) para o backend e HTML, CSS e JavaScript para o frontend.
+
+Funcionalidades
+Múltiplas Músicas: Menu para seleção de várias músicas.
+
+Ranking de Pontuação: Sistema de pontuação com ranking dos 10 melhores para cada música.
+
+Banco de Dados: As pontuações são salvas em um banco de dados SQLite.
+
+Pausa e Controles: Possibilidade de pausar e sair da partida.
+
+Penalidade por Erro: Apertar uma tecla no momento errado quebra o combo de multiplicação.
+
+Assistente de Beatmaps: Inclui um script Python para gerar "mapas de batidas" automaticamente a partir de arquivos .mp3, tanto de forma aleatória quanto através da análise do ritmo da música.
+
+Tecnologias Utilizadas
+Backend: Python 3
+
+Flask: Micro-framework web.
+
+Flask-SQLAlchemy: Para interação com o banco de dados.
+
+Mutagen: Para ler metadados de arquivos MP3 (como a duração).
+
+Librosa: Para análise de áudio e detecção de batidas.
+
+Frontend: HTML5, CSS3, JavaScript (ES6+)
+
+Banco de Dados: SQLite

@@ -1,126 +1,76 @@
+import os
+import json
+from flask import Flask, render_template, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
 
-# Seção 1: Importações
-# ---------------------
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-from werkzeug.security import generate_password_hash, check_password_hash
-import mysql.connector
-
-# Seção 2: Configuração Inicial
-# ------------------------------
 app = Flask(__name__)
-app.secret_key = '17f5fe9813722ae4f396dc93f56b3125c7797b18e2af49a5c912de405956a009'
 
-db_config = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': '',
-    'database': 'prog2'
-}
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'scores.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-# Seção 3: Rotas da Aplicação
-# ---------------------------
+class Score(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    player_name = db.Column(db.String(10), nullable=False)
+    score_value = db.Column(db.Integer, nullable=False)
+    music_name = db.Column(db.String(50), nullable=False)
 
-# Rota de Cadastro
-@app.route('/cadastro', methods=['GET', 'POST'])
-def cadastro():
-    if request.method == 'POST':
-        nome = request.form['nome']
-        username = request.form['username']
-        email = request.form['email']
-        senha = generate_password_hash(request.form['senha'])
-        
-        conn = mysql.connector.connect(**db_config)
-        cursor = conn.cursor()
-
-        cursor.execute("SELECT * FROM usuario WHERE username_usuario = %s OR email_usuario = %s", (username, email))
-        if cursor.fetchone():
-            flash("Nome de usuário ou email já cadastrado.", "erro")
-            return redirect(url_for('cadastro'))
-
-        cursor.execute("""INSERT INTO usuario (nome_usuario, username_usuario, password_usuario, email_usuario, conta_ativa)
-                          VALUES (%s, %s, %s, %s, %s)""", (nome, username, senha, email, True))
-        
-        conn.commit()
-        cursor.close()
-        conn.close()
-
-        flash("Cadastro realizado com sucesso! Você já pode fazer login.", "sucesso")
-        return redirect(url_for('login'))
-    
-    return render_template('cadastro.html')
-
-# Rota de Login
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        username = request.form['username'].strip()
-        senha = request.form['senha'].strip()
-
-        conn = mysql.connector.connect(**db_config)
-        cursor = conn.cursor(dictionary=True)
-        cursor.execute("SELECT * FROM usuario WHERE username_usuario = %s", (username,))
-        usuario = cursor.fetchone()
-        cursor.close()
-        conn.close()
-
-        if usuario and check_password_hash(usuario['password_usuario'], senha):
-            if not usuario['conta_ativa']:
-                flash("Esta conta está desativada.", "erro")
-                return redirect(url_for('login'))
-            
-            session['usuario_id'] = usuario['cod_usuario']
-            session['usuario_nome'] = usuario['nome_usuario']
-            return redirect(url_for('dashboard'))
-        else:
-            flash("Usuário ou senha inválidos.", "erro")
-            return redirect(url_for('login'))
-
-    return render_template('login.html')
-
-# Rota do Painel Principal (Dashboard) - VERSÃO CORRIGIDA
-@app.route('/dashboard')
-def dashboard():
-    # 1. Verifica se a chave 'usuario_id' existe na sessão.
-    #    Esta é a forma mais segura de saber se o login foi feito com sucesso.
-    if 'usuario_id' not in session:
-        # Se não estiver logado, envia uma mensagem e redireciona para a tela de login.
-        flash("Você precisa fazer login para acessar esta página.", "erro")
-        return redirect(url_for('login'))
-    
-    # 2. Se o usuário estiver logado, simplesmente renderize o template do dashboard.
-    #    O template 'dashboard.html' (que estende o 'base.html') vai acessar
-    #    automaticamente a variável {{ session['usuario_nome'] }} e exibi-la.
-    return render_template('dashboard.html')
-
-# Rota de Logout
-@app.route('/logout')
-def logout():
-    session.pop('usuario_id', None)
-    session.pop('usuario_nome', None)
-    flash("Você saiu da sua conta.", "sucesso")
-    return redirect(url_for('login'))
-
-# Rota Principal (Raiz do site)
 @app.route('/')
 def index():
-    return redirect(url_for('login'))
+    return render_template('index.html')
 
-# Rota para verificar se usuário ou email já existem
-@app.route('/verificar_usuario_email', methods=['POST'])
-def verificar_usuario_email():
-    username = request.form['username']
-    email = request.form['email']
+@app.route('/api/songs')
+def get_songs():
+    song_list = []
+    beatmaps_dir = os.path.join(app.static_folder, 'beatmaps')
+    try:
+        for filename in os.listdir(beatmaps_dir):
+            if filename.endswith('.json'):
+                song_id = filename.rsplit('.', 1)[0]
+                filepath = os.path.join(beatmaps_dir, filename)
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    song_list.append({
+                        'id': song_id,
+                        'name': data.get('songName', 'Nome Desconhecido'),
+                        'artist': data.get('artist', 'Artista Desconhecido')
+                    })
+    except Exception as e:
+        print(f"Erro ao ler os beatmaps: {e}")
+        return jsonify({"error": "Não foi possível listar as músicas"}), 500
+    return jsonify(song_list)
 
-    conn = mysql.connector.connect(**db_config)
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM usuario WHERE username_usuario = %s OR email_usuario = %s", (username, email))
-    existe = cursor.fetchone()
-    cursor.close()
-    conn.close()
+@app.route('/api/scores/<music_id>')
+def get_high_scores(music_id):
+    scores = Score.query.filter_by(music_name=music_id).order_by(Score.score_value.desc()).limit(10).all()
+    score_list = [
+        {'rank': i + 1, 'player_name': s.player_name, 'score_value': s.score_value}
+        for i, s in enumerate(scores)
+    ]
+    return jsonify(score_list)
 
-    return 'existe' if existe else 'disponivel'
+@app.route('/submit-score', methods=['POST'])
+def submit_score():
+    data = request.get_json()
+    if not data or 'name' not in data or 'score' not in data or 'music' not in data:
+        return jsonify({'status': 'error', 'message': 'Dados inválidos'}), 400
+    new_score = Score(player_name=data['name'], score_value=int(data['score']), music_name=data['music'])
+    db.session.add(new_score)
+    db.session.commit()
+    return jsonify({'status': 'success', 'message': 'Pontuação salva!', 'music': data['music']})
 
-# Seção 4: Execução da Aplicação
-# -------------------------------
+@app.route('/scores/<music_name>')
+def show_scores(music_name):
+    scores = Score.query.filter_by(music_name=music_name).order_by(Score.score_value.desc()).all()
+    song_info = None
+    json_path = os.path.join(app.static_folder, 'beatmaps', f"{music_name}.json")
+    try:
+        with open(json_path, 'r', encoding='utf-8') as f: song_info = json.load(f)
+    except FileNotFoundError: pass
+    return render_template('scores.html', scores=scores, music_name=music_name, song_info=song_info)
+
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)

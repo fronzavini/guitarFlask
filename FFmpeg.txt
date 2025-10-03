@@ -1,0 +1,10 @@
+Baixe o FFmpeg a versão "essentials".
+https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-essentials.7z
+
+Descompacte: Você terá um arquivo .zip. Descompacte-o em uma pasta.
+
+Encontre o ffmpeg.exe: Dentro da pasta que você descompactou, haverá uma subpasta chamada bin. Dentro dela, você encontrará ffmpeg.exe.
+
+Copie para o Projeto: A maneira mais fácil de fazer funcionar é copiar o arquivo ffmpeg.exe e colá-lo na pasta raiz do seu projeto (a mesma pasta onde está o app.py).
+
+Com librosa instalado e ffmpeg.exe na pasta, estamos prontos para o script.

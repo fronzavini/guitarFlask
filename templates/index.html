@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Hero</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+     <div id="pause-screen" class="overlay" style="display: none;">
+        <div class="start-content">
+            <h1>PAUSADO</h1>
+        </div>
+    </div>
+
+    <div id="start-screen" class="overlay">
+        <div class="start-content">
+            <h1>Python Hero</h1>
+            <p id="loading-text">Carregando músicas...</p>
+            <div id="menu-layout" style="display: none;">
+                <div id="song-selection">
+                    <h2>Escolha uma Música</h2>
+                    <div id="song-list-container"></div>
+                </div>
+                <div id="high-score-panel">
+                    <h3>Melhores Pontuações</h3>
+                    <p id="high-score-song-title">Selecione uma música</p>
+                    <ol id="high-score-list"></ol>
+                </div>
+            </div>
+            <div id="action-buttons" style="display: none;">
+                <button id="back-button">Trocar de Música</button>
+                <button id="start-button">Iniciar Jogo</button>
+            </div>
+        </div>
+    </div>
+
+    <main class="game-container">
+        <div class="info-panel" id="score-board">
+            <h2>PONTUAÇÃO</h2>
+            <p id="score-display">0</p>
+            <button id="quit-button" style="margin-top: 20px;">Voltar ao Menu</button>
+        </div>
+        <div id="game-track">
+            <div class="hit-zone">
+                <div class="fret" id="fret-1" data-key="A">A</div>
+                <div class="fret" id="fret-2" data-key="S">S</div>
+                <div class="fret" id="fret-3" data-key="D">D</div>
+                <div class="fret" id="fret-4" data-key="F">F</div>
+            </div>
+        </div>
+        <div class="info-panel" id="accuracy-board">
+            <h2>ACERTOS</h2>
+            <p id="combo-display">X0</p>
+            <p id="streak-meter">OK</p>
+        </div>
+    </main>
+
+    <div id="end-game-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>Fim de Jogo!</h2>
+            <p>Sua pontuação final foi:</p>
+            <h3 id="final-score">0</h3>
+            <form id="score-form">
+                <input type="text" id="player-name" placeholder="Digite seu nome" required maxlength="10">
+                <button type="submit">Salvar Pontuação</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>

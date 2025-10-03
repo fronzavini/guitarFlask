@@ -1,0 +1,442 @@
+/* Configurações Globais */
+:root {
+    --color-fret1: #84cc16; /* Verde */
+    --color-fret2: #ef4444; /* Vermelho */
+    --color-fret3: #eab308; /* Amarelo */
+    --color-fret4: #3b82f6; /* Azul */
+    --track-bg: #262626;
+    --main-bg: #171717;
+    --text-color: #e5e5e5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--main-bg);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Container Principal do Jogo */
+/* Container Principal do Jogo */
+.game-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Mude de 'flex-start' para 'center' para um melhor alinhamento vertical com a perspectiva */
+    gap: 40px;
+    
+    /* ADICIONE ESTA LINHA */
+    perspective: 900px; /* Define a "profundidade" da cena. Experimente valores entre 800px e 1200px. */
+}
+
+/* Pista Principal */
+/* Pista Principal */
+#game-track {
+    width: 300px;
+    height: 90vh;
+    background-image: 
+        /* Dot no "traste 12" (duplo) */
+        radial-gradient(circle, #d4d4d4 12px, transparent 13px),
+        radial-gradient(circle, #d4d4d4 12px, transparent 13px),
+        /* Dots nos trastes 9, 7, 5, 3 */
+        radial-gradient(circle, #e5e5e5 15px, transparent 16px),
+        radial-gradient(circle, #e5e5e5 15px, transparent 16px),
+        radial-gradient(circle, #e5e5e5 15px, transparent 16px),
+        radial-gradient(circle, #e5e5e5 15px, transparent 16px),
+
+        /* Camada 2: Trastes (Linhas de Metal) */
+        repeating-linear-gradient(
+            to bottom, 
+            #8a8a8a, 
+            #8a8a8a 2px, 
+            transparent 2px, 
+            transparent 8% /* Espaçamento entre os trastes */
+        ),
+
+        /* Camada 3: Textura de Madeira (use uma imagem de sua preferência) */
+        url('https://wallpapers.com/images/high/rock-and-roll-digital-art-pqjn3pct1kivkftm.webp');
+
+    /* Posição de cada camada de background */
+    background-position:
+        /* Dots duplos do traste 12 */
+        85px 18%, 185px 18%, 
+        /* Posição dos dots 9, 7, 5, 3 */
+        center 30%, 
+        center 45%, 
+        center 60%, 
+        center 75%,
+        /* Posição dos trastes e da madeira */
+        0 0, 
+        center;
+    
+    /* Tamanho de cada camada de background */
+    background-size: 
+        /* Tamanho dos dots */
+        auto, auto, auto, auto, auto, auto, 
+        /* Tamanho dos trastes e da madeira */
+        100% 100%, 
+        cover; 
+
+    /* Garante que apenas a madeira se repita se necessário */
+    background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, no-repeat, repeat-y, no-repeat;
+
+    border: 5px solid #444;
+    border-top: 15px solid #222; /* Simula o headstock da guitarra */
+    border-bottom: none;
+    border-radius: 20px 20px 0 0;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.7);
+    transform: rotateX(55deg);
+    transform-origin: bottom;
+    border: 5px solid #444;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.7);
+
+    /* ADICIONE ESTA LINHA */
+    transform: rotateX(55deg); /* Inclina a pista. Experimente valores entre 45deg e 65deg. */
+
+    /* OPCIONAL: Adiciona uma origem de transformação para um efeito melhor */
+    transform-origin: bottom; 
+}
+
+/* Zona de Acerto (base da guitarra) */
+.hit-zone {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 10px;
+     z-index: 10; /* ADICIONE ESTA LINHA */
+    
+}
+
+.fret {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: 1px 1px 2px black;
+    transition: transform 0.05s ease, box-shadow 0.05s ease;
+}
+
+/* Efeito de tecla pressionada (será ativado via JS) */
+.fret.active {
+    transform: scale(0.95);
+    box-shadow: 0 0 20px #fff, inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+#fret-1 { background-color: var(--color-fret1); }
+#fret-2 { background-color: var(--color-fret2); }
+#fret-3 { background-color: var(--color-fret3); }
+#fret-4 { background-color: var(--color-fret4); }
+
+/* Notas Caindo */
+.note {
+    position: absolute;
+    width: 50px;
+    height: 25px;
+    border-radius: 25px;
+    border: 1px solid black;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    /* A posição 'left' e 'top' será controlada pelo JavaScript */
+}
+
+.note.color-1 { left: 12.5%; transform: translateX(-50%); background-color: var(--color-fret1); }
+.note.color-2 { left: 37.5%; transform: translateX(-50%); background-color: var(--color-fret2); }
+.note.color-3 { left: 62.5%; transform: translateX(-50%); background-color: var(--color-fret3); }
+.note.color-4 { left: 87.5%; transform: translateX(-50%); background-color: var(--color-fret4); }
+
+/* Painéis de Informação (Pontos e Acertos) */
+.info-panel {
+    text-align: center;
+    width: 200px;
+    padding: 20px;
+    background-color: var(--track-bg);
+    border-radius: 10px;
+}
+
+.info-panel h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    color: #aaa;
+}
+
+.info-panel p {
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+#streak-meter {
+    font-size: 1.5rem;
+    margin-top: 15px;
+    color: var(--color-fret1); /* Verde para "Bom" */
+}
+
+/* Estilo do Modal de Fim de Jogo */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none; /* Escondido por padrão */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #333;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    border: 2px solid #555;
+}
+
+.modal-content h2 {
+    margin-bottom: 15px;
+}
+
+.modal-content #final-score {
+    font-size: 3rem;
+    color: var(--color-fret3);
+    margin-bottom: 20px;
+}
+
+.modal-content input {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid #777;
+    background-color: #555;
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--color-fret1);
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.modal-content button:hover {
+    background-color: #a3e635;
+}
+
+/* Estilo para o texto de feedback de acerto */
+.hit-feedback {
+    position: absolute;
+    bottom: 100px; /* Posiciona um pouco acima dos botões */
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 10px yellow, 0 0 20px yellow;
+    pointer-events: none; /* Impede que o texto interfira com cliques/eventos */
+    z-index: 20;
+    /* Animação para aparecer e sumir */
+    animation: popupFade 0.6s ease-out forwards;
+}
+
+@keyframes popupFade {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-50px) scale(1.2);
+    }
+}
+
+#song-selection {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 500px;
+}
+
+#song-list-container {
+    max-height: 40vh;
+    overflow-y: auto;
+    border: 2px solid #555;
+    border-radius: 5px;
+    padding: 10px;
+    background: rgba(0,0,0,0.2);
+}
+
+.song-item {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #333;
+    color: #eee;
+    border: 2px solid #555;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    font-size: 1.1rem;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+.song-item:last-child {
+    margin-bottom: 0;
+}
+
+.song-item:hover {
+    background-color: #444;
+    border-color: #888;
+}
+
+.song-item.selected {
+    background-color: var(--color-fret1);
+    border-color: #fff;
+    color: #111;
+    font-weight: bold;
+}
+
+/* No final de static/css/style.css */
+
+#menu-layout {
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 900px;
+}
+
+#song-selection {
+    flex: 1; /* Ocupa o espaço disponível */
+}
+
+#high-score-panel {
+    flex-basis: 300px; /* Largura fixa */
+    background: rgba(0,0,0,0.2);
+    border: 2px solid #555;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+#high-score-panel h3 {
+    margin-top: 0;
+    text-align: center;
+}
+
+#high-score-song-title {
+    text-align: center;
+    font-weight: bold;
+    color: var(--color-fret3);
+    margin-bottom: 15px;
+    min-height: 24px;
+}
+
+#high-score-list {
+    list-style: none;
+    padding-left: 0;
+    font-size: 1.1rem;
+}
+
+#high-score-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 5px;
+    border-bottom: 1px solid #444;
+}
+
+#high-score-list li:last-child {
+    border-bottom: none;
+}
+
+#high-score-list .player-name {
+    flex-grow: 1;
+    text-align: left;
+    margin-left: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#high-score-list .player-score {
+    font-weight: bold;
+    color: var(--color-fret1);
+}
+
+#action-buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+#back-button {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: white;
+    background-color: #555; /* Cor diferente para o botão de voltar */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+#back-button:hover {
+    background-color: #777;
+}
+
+/* Ajusta o botão de start para o novo layout */
+#start-button {
+    padding: 15px 30px;
+    font-size: 1.5rem; /* Re-aplicando para garantir */
+}
+
+/* No final de static/css/style.css */
+
+/* Estilo para o botão de sair da partida */
+#quit-button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: white;
+    background-color: #555;
+    border: 1px solid #888;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#quit-button:hover {
+    background-color: #777;
+}
