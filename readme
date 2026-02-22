@@ -1,7 +1,7 @@
-🎸 Python Hero
+🎸 Guitar Flask
 📚 Descrição
 
-Python Hero é um jogo de ritmo inspirado no estilo Guitar Hero, desenvolvido com Python e Flask no back-end e HTML, CSS e JavaScript no front-end.
+Guitar Flask é um jogo de ritmo inspirado no estilo Guitar Hero, desenvolvido com Python e Flask no back-end e HTML, CSS e JavaScript no front-end.
 
 O jogador deve pressionar as teclas corretas no momento exato em que as notas atingem a linha de execução, acumulando pontos e mantendo combos para multiplicar a pontuação. O sistema avalia precisão e tempo de resposta, proporcionando uma experiência dinâmica e desafiadora.
 
@@ -84,7 +84,7 @@ O jogo permite selecionar uma música, iniciar a partida, acompanhar as notas em
 
 📚 O que aprendemos com o projeto
 
-Durante o desenvolvimento do Python Hero, foram aprimorados conhecimentos em:
+Durante o desenvolvimento do Guitar Flask, foram aprimorados conhecimentos em:
 
 desenvolvimento full-stack com Flask
 
@@ -99,23 +99,3 @@ sincronização entre áudio e elementos visuais
 análise de sinais de áudio com Librosa
 
 organização de projeto escalável
-
-🚀 Possíveis melhorias futuras
-
-Sistema de níveis de dificuldade
-
-Modo multiplayer local
-
-Sistema de login de usuários
-
-Ranking global online
-
-Interface mais moderna e animada
-
-Sistema de feedback avançado (Perfect / Good / Miss)
-
-Compatibilidade com dispositivos móveis
-
-Upload de músicas pelo usuário
-
-Sistema de skins ou temas visuais
