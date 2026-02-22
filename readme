@@ -1,108 +1,121 @@
-🎸 Guitar Flask
+🎸 Python Hero
 📚 Descrição
 
-Guitar Flask é um jogo de ritmo inspirado no clássico Guitar Hero, desenvolvido com Python, Flask e JavaScript, integrando back-end e front-end em uma aplicação web interativa.
+Python Hero é um jogo de ritmo inspirado no estilo Guitar Hero, desenvolvido com Python e Flask no back-end e HTML, CSS e JavaScript no front-end.
 
-No jogo, o jogador deve pressionar as teclas corretas no momento exato em que as notas alcançam a linha de execução, acompanhando o ritmo da música. A pontuação é calculada com base na precisão, tempo de resposta e sequência de acertos (combo).
+O jogador deve pressionar as teclas corretas no momento exato em que as notas atingem a linha de execução, acumulando pontos e mantendo combos para multiplicar a pontuação. O sistema avalia precisão e tempo de resposta, proporcionando uma experiência dinâmica e desafiadora.
 
-O projeto tem como objetivo explorar o desenvolvimento de jogos dentro do ambiente web, aplicando conceitos de sincronização musical, lógica de tempo real, manipulação de eventos e integração entre servidor e cliente.
+O projeto combina desenvolvimento web full-stack com conceitos de jogos rítmicos, incluindo sincronização musical, detecção de batidas e persistência de dados em banco de dados.
+
+🛠️ Instalação
+
+Instale as dependências com:
+
+pip install Flask Flask-SQLAlchemy mutagen librosa
 
 🛠️ Tecnologias utilizadas
+🔹 Backend
 
-Python
+Python 3
 
 Flask
 
-JavaScript
+Flask-SQLAlchemy
+
+Mutagen (leitura de metadados de MP3)
+
+Librosa (análise de áudio e detecção de batidas)
+
+🔹 Frontend
 
 HTML5
 
 CSS3
 
-Manipulação de áudio via navegador (Web Audio API ou similar)
+JavaScript (ES6+)
+
+🔹 Banco de Dados
+
+SQLite
 
 ✨ Funcionalidades e principais diferenciais
 
-Jogo de ritmo em ambiente web
+🎵 Menu com múltiplas músicas
 
-Sistema de detecção de tempo e precisão das notas
+🏆 Ranking com os 10 melhores jogadores por música
 
-Sistema de pontuação baseado em acertos e combos
+💾 Salvamento automático de pontuações no banco de dados
 
-Feedback visual para acerto, erro e sequência perfeita
+⏸️ Sistema de pausa e saída da partida
 
-Sincronização entre música e geração de notas
+🔥 Sistema de combo com multiplicador de pontuação
 
-Interface dinâmica construída com JavaScript
+❌ Penalidade por erro (quebra de combo ao pressionar tecla incorreta)
 
-Comunicação entre front-end e back-end via Flask
+🎧 Assistente de Beatmaps automático
 
-Estrutura organizada para adição de novas músicas
+📊 Geração de mapas de notas:
 
-Sistema de reinício rápido da partida
+modo aleatório
 
-Design responsivo
+modo baseado na análise real do ritmo da música
 
-O principal diferencial do projeto é a proposta de desenvolver um jogo de ritmo totalmente funcional dentro de uma aplicação Flask, demonstrando como é possível unir lógica de jogo e desenvolvimento web moderno.
+O principal diferencial do projeto é o sistema automatizado de geração de beatmaps, que utiliza análise de áudio para sincronizar notas com o ritmo real da música.
 
 🔄 Processo de desenvolvimento
 
-O desenvolvimento do Guitar Flask foi dividido em etapas:
+O projeto foi desenvolvido em etapas:
 
-definição da mecânica principal do jogo de ritmo;
+estruturação do servidor Flask
 
-estruturação do back-end em Flask;
+modelagem do banco de dados com SQLAlchemy
 
-criação da interface e renderização das notas em JavaScript;
+criação do sistema de ranking
 
-implementação do sistema de tempo e sincronização musical;
+implementação do sistema de tempo e pontuação
 
-desenvolvimento do sistema de pontuação e combos;
+integração entre backend e frontend
 
-testes de precisão e ajuste do tempo de resposta;
+desenvolvimento do analisador de batidas com Librosa
 
-organização do código e estrutura modular.
+testes de sincronização e balanceamento
 
-O jogo inicia com o carregamento da música e da interface. As notas passam a se mover na tela de forma sincronizada com o áudio, e o jogador deve interagir utilizando o teclado no momento exato para acumular pontos.
+O jogo permite selecionar uma música, iniciar a partida, acompanhar as notas em tempo real e salvar a pontuação automaticamente ao final.
 
 📚 O que aprendemos com o projeto
 
-Durante o desenvolvimento do Guitar Flask, foram aprimorados conhecimentos em:
+Durante o desenvolvimento do Python Hero, foram aprimorados conhecimentos em:
 
-desenvolvimento web com Flask;
+desenvolvimento full-stack com Flask
 
-integração entre back-end e front-end;
+modelagem de banco de dados com SQLAlchemy
 
-manipulação de eventos em JavaScript;
+integração entre backend e frontend
 
-controle de tempo e sincronização com áudio;
+manipulação de eventos em tempo real no JavaScript
 
-lógica de jogos aplicada a aplicações web;
+sincronização entre áudio e elementos visuais
 
-organização de projetos full-stack;
+análise de sinais de áudio com Librosa
 
-tratamento de entrada do usuário em tempo real;
-
-estruturação de código modular e escalável.
+organização de projeto escalável
 
 🚀 Possíveis melhorias futuras
 
-Adição de múltiplas músicas
-
-Sistema de seleção de dificuldade
-
-Ranking de pontuação
-
-Sistema de login e armazenamento de scores
+Sistema de níveis de dificuldade
 
 Modo multiplayer local
 
-Melhorias visuais e animações mais refinadas
+Sistema de login de usuários
 
-Efeitos sonoros adicionais
+Ranking global online
 
-Sistema de feedback avançado (perfect, good, miss)
+Interface mais moderna e animada
+
+Sistema de feedback avançado (Perfect / Good / Miss)
 
 Compatibilidade com dispositivos móveis
 
-Implementação de níveis progressivos
+Upload de músicas pelo usuário
+
+Sistema de skins ou temas visuais
