@@ -1,85 +1,90 @@
-# 🎸 GUITAR FLASK
+# 🎮 Whispers of Hecate
 
-## 🎮 Jogo de Ritmo Web inspirado em Guitar Hero
+## 📚 Descrição
 
----
+**Whispers of Hecate** é um jogo 2D de ação e aventura inspirado na mitologia grega, desenvolvido em pixel art e com perspectiva top-down.
 
-## 📚 DESCRIÇÃO
+No jogo, o jogador embarca em uma missão dentro de um labirinto, onde deve atravessar **cinco fases**, derrotando o inimigo principal de cada uma delas, coletando itens e acumulando experiência para, na fase final, enfrentar a deusa **Hécate**.
 
-**Guitar Flask** é um jogo de ritmo inspirado no clássico Guitar Hero, desenvolvido como uma aplicação web utilizando **Python, Flask e JavaScript**.
-
-O jogador deve pressionar as teclas corretas exatamente no momento em que as notas alcançam a linha de execução. A pontuação é calculada com base na **precisão do timing**, exigindo coordenação, reflexo e senso rítmico.
-
-O projeto une **desenvolvimento web e lógica de jogos**, explorando sincronização musical, manipulação de eventos em tempo real e integração entre back-end e front-end.
+A câmera acompanha o personagem com um sistema de zoom, limitando o campo de visão e tornando a exploração mais desafiadora.  
+O projeto tem como objetivo unir entretenimento e aprendizado, despertando o interesse pela mitologia grega de forma interativa.
 
 ---
 
-## 🛠️ TECNOLOGIAS UTILIZADAS
+## 🛠️ Tecnologias utilizadas
 
-- **Python**
-- **Flask**
-- **JavaScript**
-- **HTML5**
-- **CSS3**
-- **Web Audio API**
+- GameMaker Studio
+- GameMaker Language (GML)
+- Pixel art para criação dos sprites
+- Ferramentas de edição de áudio para trilhas sonoras e efeitos sonoros
 
 ---
 
-## ✨ FUNCIONALIDADES E PRINCIPAIS DIFERENCIAIS
+## ✨ Funcionalidades e principais diferenciais
 
-- 🎵 Jogo de ritmo executado diretamente no navegador  
-- ⏱️ Sistema de sincronização entre música e notas  
-- 🎯 Sistema de pontuação baseado em precisão  
-- 🔥 Sistema de combo  
-- 📊 Barra de progresso da música  
-- 💡 Feedback visual para acertos e erros  
-- 🔄 Reinício rápido de partida  
-- 🧩 Estrutura modular para adicionar novas músicas  
-- 🔗 Comunicação entre Flask (back-end) e JavaScript (front-end)  
+- Jogo 2D em pixel art com visão top-down
+- Sistema de movimentação em todas as direções
+- Sistema de ataque e defesa do personagem
+- Sistema de dash
+- Inimigos comuns e inimigos do tipo boss
+- Sistema de inventário
+- Itens com efeitos (vida e velocidade)
+- Campo de visão com efeito de névoa (fog of war)
+- Zoom dinâmico da câmera seguindo o personagem
+- Cut-scenes para apresentação da narrativa
+- Tutorial jogável
+- Sistema de troca de armas (espada, arco, lança e machado)
+- Hit-combo no ataque principal
+- Barra de vida
+- Sistema de escolha de personagem
+- Sistema de escolha de habilidade
+- Enfoque educacional voltado à mitologia grega
 
-### 🚀 DIFERENCIAL DO PROJETO
-
-O principal diferencial do Guitar Flask é demonstrar como **Flask pode ser utilizado além de aplicações CRUD tradicionais**, servindo como base para um jogo interativo com mecânicas em tempo real.
-
----
-
-## 🔄 PROCESSO DE DESENVOLVIMENTO
-
-### 1️⃣ Planejamento
-- Definição das mecânicas principais  
-- Estruturação do fluxo do jogo  
-
-### 2️⃣ Back-end
-- Criação da aplicação Flask  
-- Organização das rotas e estrutura do projeto  
-
-### 3️⃣ Front-end
-- Renderização dinâmica das notas  
-- Implementação da lógica de timing  
-- Desenvolvimento do sistema de pontuação e combo  
-
-### 4️⃣ Ajustes e Testes
-- Testes de latência  
-- Ajustes finos de sincronização  
-- Melhorias visuais  
+O principal diferencial do projeto é a proposta de apresentar conceitos da mitologia grega integrados diretamente à narrativa e à progressão do jogo.
 
 ---
 
-## 📚 O QUE FOI APRENDIDO COM O PROJETO
+## 🔄 Processo de desenvolvimento
 
-- Integração entre Flask e JavaScript  
-- Sincronização de eventos com áudio  
-- Manipulação de DOM em tempo real  
-- Estruturação de aplicações web interativas  
-- Organização modular de projetos  
+O desenvolvimento do jogo foi organizado por módulos, envolvendo:
+
+- definição da narrativa;
+- criação do labirinto e das fases;
+- implementação das mecânicas de movimentação, combate, câmera e inventário;
+- produção de artes em pixel art;
+- criação de trilha sonora e efeitos sonoros;
+- desenvolvimento de cut-scenes e tutorial.
+
+O jogo inicia com uma cut-scene de introdução, seguida por um tutorial que ensina as mecânicas básicas de movimentação, ataque, dash e uso de habilidades.  
+Após o tutorial, o jogador passa a explorar o labirinto, enfrentando inimigos, coletando itens e evoluindo para chegar ao confronto final contra Hécate.
 
 ---
 
-## 🚀 POSSÍVEIS MELHORIAS FUTURAS
+## 📚 O que aprendemos com o projeto
 
-- 🎶 Suporte para múltiplas músicas  
-- 🏆 Sistema de ranking  
-- 🎨 Melhorias visuais e animações  
-- 📱 Responsividade para dispositivos móveis  
-- ⚡ Otimização de desempenho  
-- 🎮 Novos modos de jogo  
+Durante o desenvolvimento do Whispers of Hecate, a equipe aprimorou conhecimentos em:
+
+- programação de jogos com GameMaker Language (GML);
+- lógica de programação aplicada a sistemas de combate;
+- desenvolvimento de câmera dinâmica e campo de visão;
+- criação de inventários e gerenciamento de itens;
+- criação de sistemas de inimigos e bosses;
+- integração de áudio e efeitos sonoros;
+- criação de interfaces de menu e HUD;
+- organização de projetos de jogos;
+- trabalho em equipe e divisão de tarefas.
+
+---
+
+## 🚀 Possíveis melhorias futuras
+
+- Adição de novas funcionalidades e mecânicas de jogo
+- Criação de novas fases e inimigos
+- Expansão da narrativa
+- Revisão geral do balanceamento do jogo
+- Implementação de novas opções de personalização do personagem
+- Inclusão de novos itens e habilidades
+- Melhorar a arte do jogo (sprites, cenários e identidade visual)
+- Ajustar animações
+- Refinar a interface
+- Melhorar a ambientação visual das fases
